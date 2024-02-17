@@ -12,7 +12,7 @@ if [[ -z $BASE_SHA && $GITHUB_EVENT_NAME == "push" ]]; then
 fi
 
 CHANGED="$(git diff --exit-code --quiet ${BASE_SHA} HEAD -- ${DIFF_PATHS} && echo 'false' || echo 'true')"
-FILES="$(git diff --name-only --diff-filter=D ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
+FILES="$(git diff --name-only --diff-filter=d ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
 
 # echo $FILES | tr '\n' ' '
 echo "changed=${CHANGED}" >> "${GITHUB_OUTPUT}"

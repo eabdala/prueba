@@ -6,7 +6,7 @@
 # Iterar sobre la lista de archivos modificados
 
 # shellcheck disable=SC2086
-
+DIFF_PATHS='*'
 if [[ $GITHUB_EVENT_NAME != "push" && $GITHUB_EVENT_NAME != "pull_request" ]]; then
   echo "::warning title=unsupported::action ran on unsupported event ${GITHUB_EVENT_NAME}"
   exit 0

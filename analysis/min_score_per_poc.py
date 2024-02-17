@@ -1,5 +1,5 @@
 # Databricks notebook source
-ls -ltr /dbfs/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Score/min_rating_per_poc
+# ls -ltr /dbfs/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Score/min_rating_per_poc
 
 # COMMAND ----------
 

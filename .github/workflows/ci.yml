@@ -45,4 +45,5 @@ jobs:
           with:
             options: "--check --verbose"
             jupyter: False
+            src: "./analysis"
             # version: "21.5b1"

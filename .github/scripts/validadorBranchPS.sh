@@ -12,7 +12,7 @@ if [[ -z $BASE_SHA && $GITHUB_EVENT_NAME == "push" ]]; then
 fi
 
 CHANGED="$(git diff --exit-code --quiet ${BASE_SHA} HEAD -- ${DIFF_PATHS} && echo 'false' || echo 'true')"
-FILES="$(git diff --name-only ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
+FILES="$(git diff --name-only --diff-filter=D ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
 
 # echo $FILES | tr '\n' ' '
 echo "changed=${CHANGED}" >> "${GITHUB_OUTPUT}"
@@ -159,6 +159,6 @@ printf "\n\e[0;36m ********* Archivos Eliminados ********* \e[m\n\n"
 
 IFS=$'\n'
 for file in $files_deleted; do
-   echo $file
+   printf 'Archivo: %s \n' $file
 done
 IFS=$IFS_SAVE  # Restaurar el valor original de IFS

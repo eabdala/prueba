@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 # Obtener la lista de archivos modificados
 # archivos_modificados=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-archivos_modificados=$(ls .)
+# archivos_modificados=$(ls .)
 
 # Iterar sobre la lista de archivos modificados
 echo "Archivos modificados:"
 IFS=$'\n'
-for archivo in $archivos_modificados; do
+for archivo in $1; do
   echo "- $archivo"
 done
 # URL=$2

@@ -8,7 +8,7 @@ ls -ltr /dbfs/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Arena/Upse
 
 # COMMAND ----------
 
-
+import pandas as pd
 dbutils.widgets.text('dias', '14')
 dias = int(getArgument('dias'))
 print(dias)

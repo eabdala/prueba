@@ -6,7 +6,7 @@
 # Iterar sobre la lista de archivos modificados
 echo "Archivos modificados:"
 IFS=$'\n'
-for archivo in $1; do
+for archivo in $3; do
   echo "- $archivo"
 done
 # URL=$2

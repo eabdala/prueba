@@ -33,6 +33,9 @@ jobs:
 
       - name: Run script
         run: ./.github/scripts/validadorBranchPS.sh $archivos_modificados $BRANCH_NAME $REPO_URL
+        env:
+            DIFF_PATHS: "*"
+            BASE_SHA: ${{ github.event.pull_request.base.sha }}
 #   ruff:
 #     needs: execute-script
 #     runs-on: ubuntu-latest

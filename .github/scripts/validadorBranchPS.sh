@@ -12,7 +12,7 @@ if [[ -z $BASE_SHA && $GITHUB_EVENT_NAME == "push" ]]; then
 fi
 
 CHANGED="$(git diff --exit-code --quiet ${BASE_SHA} HEAD -- ${DIFF_PATHS} && echo 'false' || echo 'true')"
-FILES="$(git diff --name-only ${BASE_SHA} HEAD -- ${DIFF_PATHS} )"
+FILES="$(git diff --name-only ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
 
 # echo $FILES | tr '\n' ' '
 echo "changed=${CHANGED}" >> "${GITHUB_OUTPUT}"
@@ -72,11 +72,12 @@ FILE_COUNTER=0
 
 printf "\n\e[0;36m ********* Archivos modificados ********* \e[m\n\n"
 
-IFS=$'\n'
+IFS_SAVE=$IFS  # Guardar el valor actual de IFS
+IFS=' '        # Establecer IFS para que use el espacio como delimitador
 for file in $FILES; do
    echo $file
 done
-
+IFS=$IFS_SAVE  # Restaurar el valor original de IFS
 # printf "\n\e[0;36m ********* Comienzo de validaciones ********* \e[m\n\n"
 
 

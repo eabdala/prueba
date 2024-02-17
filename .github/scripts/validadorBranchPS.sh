@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
-# Obtener la lista de archivos modificados
-# archivos_modificados=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
-# archivos_modificados=$(ls .)
-
-# Iterar sobre la lista de archivos modificados
 
 # shellcheck disable=SC2086
-DIFF_PATHS='*'
+
 if [[ $GITHUB_EVENT_NAME != "push" && $GITHUB_EVENT_NAME != "pull_request" ]]; then
   echo "::warning title=unsupported::action ran on unsupported event ${GITHUB_EVENT_NAME}"
   exit 0
@@ -30,11 +25,6 @@ else
 fi
 
 
-echo "Archivos modificados:"
-IFS=$'\n'
-for archivo in $FILES; do
-  echo "- $archivo"
-done
 # URL=$2
 # repo_name=$(basename "$URL" .git)
 # CURRENT_DIR=$(dirname ${BASH_SOURCE[0]})
@@ -75,17 +65,17 @@ done
 # git pull -q
 # echo " - Done"
 
-# COUNTER_ERROR=0
-# FILE_COUNTER=0
+COUNTER_ERROR=0
+FILE_COUNTER=0
 
 # files=`git diff origin/master... --name-only --diff-filter=d`
 
-# printf "\n\e[0;36m ********* Archivos modificados ********* \e[m\n\n"
+printf "\n\e[0;36m ********* Archivos modificados ********* \e[m\n\n"
 
-# IFS=$'\n'
-# for file in $files; do
-#    echo $file
-# done
+IFS=$'\n'
+for file in $FILES; do
+   echo $file
+done
 
 # printf "\n\e[0;36m ********* Comienzo de validaciones ********* \e[m\n\n"
 

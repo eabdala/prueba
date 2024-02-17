@@ -16,23 +16,26 @@ jobs:
         with:
             fetch-depth: 0 # needed to checkout all branches for this Action to work
       # Check the PR diff using the current branch and the base branch of the PR
-      - id: changed-files
-        uses: ahmadnassri/action-changed-files@v1
+    #   - id: changed-files
+    #     uses: ahmadnassri/action-changed-files@v1
 
     #   - run: |
     #       for file in ${{ steps.changed-files.outputs.files }}; do
     #         echo "$file has changed"
     #       done
-      - name: Set branch name as environment variable
-        run: echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
+    #   - name: Set branch name as environment variable
+    #     run: echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
 
-      - name: Set repository URL as environment variable
-        run: echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
-      - name: set 
-        run: echo "archivos_modificados=${{ steps.changed-files.outputs.files }}" >> $GITHUB_ENV
+    #   - name: Set repository URL as environment variable
+    #     run: echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
+    #   - name: set 
+    #     run: echo "archivos_modificados=${{ steps.changed-files.outputs.files }}" >> $GITHUB_ENV
 
       - name: Run script
-        run: ./.github/scripts/validadorBranchPS.sh $archivos_modificados $BRANCH_NAME $REPO_URL
+        run: ./.github/scripts/validadorBranchPS.sh
+        env:
+            DIFF_PATHS: "*"
+            BASE_SHA: ${{ github.event.pull_request.base.sha }}
 #   ruff:
 #     needs: execute-script
 #     runs-on: ubuntu-latest

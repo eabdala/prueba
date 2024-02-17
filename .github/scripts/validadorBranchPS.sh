@@ -25,22 +25,6 @@ else
 fi
 
 
-# URL=$2
-# repo_name=$(basename "$URL" .git)
-# CURRENT_DIR=$(dirname ${BASH_SOURCE[0]})
-# APP_PATH=${CURRENT_DIR}/..
-
-# if [ -d "$repo_name" ]; then
-#       printf "La carpeta del repo existe. \n"
-#       cd ${repo_name}
-# else
-#       printf "La carpeta del repo no existe. \n"
-
-#       printf "Clonar repo si no existe \n"
-#       git clone -q ${URL}
-#       cd ${repo_name}
-# fi
-
 python_inst=$(command -v python &> /dev/null;)
 if [ -z "$python_inst" ]; then
     printf "Python está instalado. \n"
@@ -60,15 +44,12 @@ fi
 
 
 
-# printf "Checkout a la rama y pull de novedades \n"
-# git checkout -f -q $1
-# git pull -q
-# echo " - Done"
+
 
 COUNTER_ERROR=0
 FILE_COUNTER=0
 
-# files=`git diff origin/master... --name-only --diff-filter=d`
+
 
 printf "\n\e[0;36m ********* Archivos modificados ********* \e[m\n\n"
 
@@ -172,12 +153,12 @@ else
 fi
 
 
-# files_deleted=`git diff origin/master... --name-only --diff-filter=D`
+files_deleted="$(git diff --name-only --diff-filter=D ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
 
-# printf "\n\e[0;36m ********* Archivos Eliminados ********* \e[m\n\n"
+printf "\n\e[0;36m ********* Archivos Eliminados ********* \e[m\n\n"
 
-# IFS=$'\n'
-# for file in $files_deleted; do
-#    echo $file
-# done
+IFS=$'\n'
+for file in $files_deleted; do
+   echo $file
+done
 IFS=$IFS_SAVE  # Restaurar el valor original de IFS

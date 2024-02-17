@@ -19,7 +19,7 @@ fi
 CHANGED="$(git diff --exit-code --quiet ${BASE_SHA} HEAD -- ${DIFF_PATHS} && echo 'false' || echo 'true')"
 FILES="$(git diff --name-only ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
 
-
+echo $FILES
 echo "changed=${CHANGED}" >> "${GITHUB_OUTPUT}"
 
 if [[ $FILES ]]; then

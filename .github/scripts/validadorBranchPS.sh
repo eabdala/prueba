@@ -41,22 +41,22 @@ fi
 #       cd ${repo_name}
 # fi
 
-# python_inst=$(command -v python &> /dev/null;)
-# if [ -z "$python_inst" ]; then
-#     printf "Python está instalado. \n"
-#     nombre_modulo="autoflake"
+python_inst=$(command -v python &> /dev/null;)
+if [ -z "$python_inst" ]; then
+    printf "Python está instalado. \n"
+    nombre_modulo="autoflake"
 
-#       # Verificar si el módulo está instalado
-#       if python -c "import $nombre_modulo" &> /dev/null; then
-#          printf "$nombre_modulo ya está instalado. \n"
-#       else
-#          # Instalar el módulo si no está instalado
-#          printf "Instalando $nombre_modulo... \n"
-#          pip install $nombre_modulo
-#       fi
-# else
-#     printf "Python no está instalado. \n"
-# fi
+      # Verificar si el módulo está instalado
+      if python -c "import $nombre_modulo" &> /dev/null; then
+         printf "$nombre_modulo ya está instalado. \n"
+      else
+         # Instalar el módulo si no está instalado
+         printf "Instalando $nombre_modulo... \n"
+         pip install $nombre_modulo
+      fi
+else
+    printf "Python no está instalado. \n"
+fi
 
 
 
@@ -77,14 +77,14 @@ for file in $FILES; do
    echo $file
 done
 
-# printf "\n\e[0;36m ********* Comienzo de validaciones ********* \e[m\n\n"
+printf "\n\e[0;36m ********* Comienzo de validaciones ********* \e[m\n\n"
 
 
-# for file in $files; do
-#    FILE_COUNTER_ERROR=0
-#    let FILE_COUNTER++
+for file in $FILES; do
+   FILE_COUNTER_ERROR=0
+   let FILE_COUNTER++
 
-#     printf 'Archivo: %s \n' $file
+    printf 'Archivo: %s \n' $file
 
 #    if [[ $file == analysis* ]];
 #    then

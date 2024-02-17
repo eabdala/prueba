@@ -20,7 +20,7 @@ jobs:
       - name: Set repository URL as environment variable
         run: echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
       - name: set 
-        run: echo "archivos_modificados=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})" >> $GITHUB_ENV
+        run: echo "archivos_modificados=$(git diff origin/master... --name-only --diff-filter=d)" >> $GITHUB_ENV
 
       - name: Run script
         run: ./.github/scripts/validadorBranchPS.sh $archivos_modificados $BRANCH_NAME $REPO_URL

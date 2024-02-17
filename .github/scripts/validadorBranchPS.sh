@@ -106,69 +106,69 @@ for file in $FILES; do
       fi
 
 
-#       if [[ "$file" =~ ^(notebooks[\/]Users) ]];
-#       then
-#          printf '\e[0;31m  - Databricks notebook ERROR: Las notebooks no deben estar en los directorios particulares de los usuarios. \e[m\n'
-#          let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#       fi
+      if [[ "$file" =~ ^(notebooks[\/]Users) ]];
+      then
+         printf '\e[0;31m  - Databricks notebook ERROR: Las notebooks no deben estar en los directorios particulares de los usuarios. \e[m\n'
+         let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+      fi
 
-#       # if ! [[ "$file" =~ ([\/]([A-Z][a-z]+)+([\_]([A-Z][a-z]+)+){3}.py)$ ]];
-#       # then
-#       #    printf '\e[0;31m  - Databricks notebook ERROR: Revisar la nomenclatura. \e[m\n'
-#       #    let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#       # fi
+      # if ! [[ "$file" =~ ([\/]([A-Z][a-z]+)+([\_]([A-Z][a-z]+)+){3}.py)$ ]];
+      # then
+      #    printf '\e[0;31m  - Databricks notebook ERROR: Revisar la nomenclatura. \e[m\n'
+      #    let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+      # fi
   	
-#       if grep -iq "truckprd\|lkprd\|consumezoneprod\|historyzoneprod\|prelandingzoneprod" $file 
-#       then
-#          printf "\e[0;31m  - Databricks notebook ERROR: Eliminar las referencias a tablas externas productivas truckprd o lkprd y path productivos consumezoneprod, historyzoneprod y prelandingzoneprod. \e[m\n"
-#          let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#       fi
+      if grep -iq "truckprd\|lkprd\|consumezoneprod\|historyzoneprod\|prelandingzoneprod" $file 
+      then
+         printf "\e[0;31m  - Databricks notebook ERROR: Eliminar las referencias a tablas externas productivas truckprd o lkprd y path productivos consumezoneprod, historyzoneprod y prelandingzoneprod. \e[m\n"
+         let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+      fi
 
-#       if grep -iq "print(\|display(" $file
-#       then
-#          printf "\e[0;31m  - Databricks notebook ERROR: Eliminar prints o displays (Los comentarios deben ir en celdas con lenguaje md). \e[m\n"
-#          let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#       fi
+      if grep -iq "print(\|display(" $file
+      then
+         printf "\e[0;31m  - Databricks notebook ERROR: Eliminar prints o displays (Los comentarios deben ir en celdas con lenguaje md). \e[m\n"
+         let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+      fi
 
-# 	   if grep -iq "dbutils.fs\|%fs\|%sh" $file
-#       then
-#          printf "\e[0;31m  - Databricks notebook ERROR: Eliminar todos los comandos sh o fs. \e[m\n"
-#          let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#       fi
+	   if grep -iq "dbutils.fs\|%fs\|%sh" $file
+      then
+         printf "\e[0;31m  - Databricks notebook ERROR: Eliminar todos los comandos sh o fs. \e[m\n"
+         let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+      fi
 
-#       if [[ $file != *.py ]]; 
-#       then
-#          printf "\e[0;31m  - Databricks notebook ERROR: La extension de la notebook debe ser .py. \e[m\n"
-#          let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#       fi
+      if [[ $file != *.py ]]; 
+      then
+         printf "\e[0;31m  - Databricks notebook ERROR: La extension de la notebook debe ser .py. \e[m\n"
+         let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+      fi
 
-#       if grep -iq "import pandas" $file
-#       then
-#          printf "\e[0;31m  - Databricks notebook ERROR: El uso de pandas debe ser por medio de la api de pyspark: pyspark.pandas. \e[m\n"
-#          let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#       fi 
+      if grep -iq "import pandas" $file
+      then
+         printf "\e[0;31m  - Databricks notebook ERROR: El uso de pandas debe ser por medio de la api de pyspark: pyspark.pandas. \e[m\n"
+         let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+      fi 
    
-#    fi
+   fi
 
-#    if [ "$FILE_COUNTER_ERROR" -eq "0" ]; 
-#    then
-#       printf "\e[0;32m  - No se encontraron errores \e[m\n"
-#    fi
+   if [ "$FILE_COUNTER_ERROR" -eq "0" ]; 
+   then
+      printf "\e[0;32m  - No se encontraron errores \e[m\n"
+   fi
 
 done
 
-# if [ $FILE_COUNTER -gt 20 ]; 
-# then
-#    printf '\n\e[0;33mGeneral ERROR: Los Pull Request deben tener como maximo 20 archivos.\e[m\n'
-# fi
+if [ $FILE_COUNTER -gt 20 ]; 
+then
+   printf '\n\e[0;33mGeneral ERROR: Los Pull Request deben tener como maximo 20 archivos.\e[m\n'
+fi
 
-# if [ "$COUNTER_ERROR" -ne "0" ]; 
-# then
-#    printf '\n\e[0;31mSe han encontrado %d errores!!!\e[m\n' $COUNTER_ERROR
-#    # exit 1
-# else
-#    printf '\n\e[0;32m%-6s\e[m\n' " Todos los archivos pasaron las validaciones preliminares"
-# fi
+if [ "$COUNTER_ERROR" -ne "0" ]; 
+then
+   printf '\n\e[0;31mSe han encontrado %d errores!!!\e[m\n' $COUNTER_ERROR
+   # exit 1
+else
+   printf '\n\e[0;32m%-6s\e[m\n' " Todos los archivos pasaron las validaciones preliminares"
+fi
 
 
 # files_deleted=`git diff origin/master... --name-only --diff-filter=D`

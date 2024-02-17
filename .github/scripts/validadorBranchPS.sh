@@ -112,7 +112,7 @@ for file in $FILES; do
          let COUNTER_ERROR++,FILE_COUNTER_ERROR++
       fi
 
-	   if grep -iq "dbutils.fs\|%fs\|%sh" $file
+	   if grep -iq "dbutils.fs\|%fs\|%sh\ls" $file
       then
          printf "\e[0;31m  - Databricks notebook ERROR: Eliminar todos los comandos sh o fs. \e[m\n"
          let COUNTER_ERROR++,FILE_COUNTER_ERROR++

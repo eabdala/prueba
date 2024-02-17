@@ -9,8 +9,9 @@
 # COMMAND ----------
 
 import pandas as pd
-dbutils.widgets.text('dias', '14')
-dias = int(getArgument('dias'))
+
+dbutils.widgets.text("dias", "14")
+dias = int(getArgument("dias"))
 print(dias)
 
 
@@ -21,7 +22,7 @@ print(dias)
 
 # COMMAND ----------
 
-from datetime import date,datetime,timedelta
+from datetime import date, datetime, timedelta
 
 # COMMAND ----------
 
@@ -31,11 +32,11 @@ from datetime import date,datetime,timedelta
 # COMMAND ----------
 
 # Leemos del path
-path_upsell = '/mnt/consumezoneprod/Argentina/Commercial/Arena/Upsellmodel'
-df_upsell   = spark.read.format('parquet').load(path_upsell) 
+path_upsell = "/mnt/consumezoneprod/Argentina/Commercial/Arena/Upsellmodel"
+df_upsell = spark.read.format("parquet").load(path_upsell)
 
-path_hpid = '/mnt/consumezone/Argentina/Datascience/SkuPrioritization/promotor/Features/hpid_info'
-df_hpid   = spark.read.format('parquet').load(path_hpid)
+path_hpid = "/mnt/consumezone/Argentina/Datascience/SkuPrioritization/promotor/Features/hpid_info"
+df_hpid = spark.read.format("parquet").load(path_hpid)
 
 
 # COMMAND ----------
@@ -48,26 +49,28 @@ df_hpid   = spark.read.format('parquet').load(path_hpid)
 current_date = date.today()
 
 # Filtramos upsell por la fecha actual
-df_upsell = df_upsell.filter(df_upsell.CREATED_DATE >= current_date - timedelta(days = dias))
+df_upsell = df_upsell.filter(
+    df_upsell.CREATED_DATE >= current_date - timedelta(days=dias)
+)
 
-# Hacemos join hpid_info, para obtener la columna business 
-df_join = df_upsell.join(df_hpid, on = 'HIGH_pid', how='left') \
-                   .select('poc_code',
-                           'HIGH_pid',
-                           'rating',
-                           'quantity',
-                           'recommendation_id_type',
-                           'type',
-                           'recommendation_ts',
-                           'model_type',
-                           'supplemental',
-                           'pid',
-                           'group_name',
-                           'group_description',
-                           'LAST_UPDATE',
-                           'CREATED_DATE',
-                           'business'
-                           )
+# Hacemos join hpid_info, para obtener la columna business
+df_join = df_upsell.join(df_hpid, on="HIGH_pid", how="left").select(
+    "poc_code",
+    "HIGH_pid",
+    "rating",
+    "quantity",
+    "recommendation_id_type",
+    "type",
+    "recommendation_ts",
+    "model_type",
+    "supplemental",
+    "pid",
+    "group_name",
+    "group_description",
+    "LAST_UPDATE",
+    "CREATED_DATE",
+    "business",
+)
 
 # COMMAND ----------
 
@@ -76,10 +79,10 @@ df_join = df_upsell.join(df_hpid, on = 'HIGH_pid', how='left') \
 
 # COMMAND ----------
 
-#Escribimos los datos
-spark.conf.set('spark.sql.sources.partitionOverwriteMode', 'dynamic')
-df_join.write.mode('overwrite').partitionBy('CREATED_DATE','business').format('parquet').save('/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Arena/UpsellModel')
+# Escribimos los datos
+spark.conf.set("spark.sql.sources.partitionOverwriteMode", "dynamic")
+df_join.write.mode("overwrite").partitionBy("CREATED_DATE", "business").format(
+    "parquet"
+).save("/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Arena/UpsellModel")
 
 # COMMAND ----------
-
-

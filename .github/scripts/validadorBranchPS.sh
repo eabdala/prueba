@@ -12,9 +12,9 @@ if [[ -z $BASE_SHA && $GITHUB_EVENT_NAME == "push" ]]; then
 fi
 
 CHANGED="$(git diff --exit-code --quiet ${BASE_SHA} HEAD -- ${DIFF_PATHS} && echo 'false' || echo 'true')"
-FILES="$(git diff --name-only ${BASE_SHA} HEAD -- ${DIFF_PATHS} | tr '\n' ' ')"
+FILES="$(git diff --name-only ${BASE_SHA} HEAD -- ${DIFF_PATHS} )"
 
-# echo $FILES
+# echo $FILES | tr '\n' ' '
 echo "changed=${CHANGED}" >> "${GITHUB_OUTPUT}"
 
 if [[ $FILES ]]; then
@@ -69,7 +69,7 @@ COUNTER_ERROR=0
 FILE_COUNTER=0
 
 # files=`git diff origin/master... --name-only --diff-filter=d`
-   
+
 printf "\n\e[0;36m ********* Archivos modificados ********* \e[m\n\n"
 
 IFS=$'\n'

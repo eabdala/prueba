@@ -13,17 +13,35 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      # Check the PR diff using the current branch and the base branch of the PR
+      - uses: GrantBirki/git-diff-action@vX.X.X
+        id: git-diff-action
+        with:
+          json_diff_file_output: diff.json
+          raw_diff_file_output: diff.txt
+          file_output_only: "true"
 
-      - name: Set branch name as environment variable
-        run: echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
+      # Print the diff in JSON format
+      - name: print json diff
+        env:
+          DIFF: ${{ steps.git-diff-action.outputs.json-diff-path }}
+        run: cat $DIFF
 
-      - name: Set repository URL as environment variable
-        run: echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
-      - name: set 
-        run: echo "archivos_modificados=$(git diff master --name-only --diff-filter=d)" >> $GITHUB_ENV
+      # Print the diff in raw git format
+      - name: print raw diff
+        env:
+          DIFF: ${{ steps.git-diff-action.outputs.raw-diff-path }}
+        run: cat $DIFF
+    #   - name: Set branch name as environment variable
+    #     run: echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
 
-      - name: Run script
-        run: ./.github/scripts/validadorBranchPS.sh $archivos_modificados $BRANCH_NAME $REPO_URL
+    #   - name: Set repository URL as environment variable
+    #     run: echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
+    #   - name: set 
+    #     run: echo "archivos_modificados=$(git diff master --name-only --diff-filter=d)" >> $GITHUB_ENV
+
+    #   - name: Run script
+    #     run: ./.github/scripts/validadorBranchPS.sh $archivos_modificados $BRANCH_NAME $REPO_URL
 #   ruff:
 #     needs: execute-script
 #     runs-on: ubuntu-latest

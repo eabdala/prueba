@@ -1,5 +1,5 @@
 # Databricks notebook source
-ls -ltr /dbfs/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Arena/UpsellModel/
+# ls -ltr /dbfs/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Arena/UpsellModel/
 
 # COMMAND ----------
 

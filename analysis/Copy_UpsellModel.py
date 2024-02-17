@@ -8,9 +8,11 @@ ls -ltr /dbfs/mnt/consumezone/Argentina/Datascience/SkuPrioritization/Arena/Upse
 
 # COMMAND ----------
 
+
 dbutils.widgets.text('dias', '14')
 dias = int(getArgument('dias'))
 print(dias)
+
 
 # COMMAND ----------
 

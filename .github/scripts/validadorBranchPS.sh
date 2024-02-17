@@ -86,24 +86,24 @@ for file in $FILES; do
 
     printf 'Archivo: %s \n' $file
 
-#    if [[ $file == analysis* ]];
-#    then
-#       if [ -z "$python_inst" ]; then
-#          if [[ $file == *.py ]]; then
-#             cambios=$(python -m autoflake -c --remove-unused-variables --remove-unused-variables "$file")
-#             # Verificar si la salida contiene la cadena "Unused imports/variables detected"
-#             if [[ "$cambios" == *"Unused imports/variables detected"* ]]; then
-#                printf "\e[0;31m  - Se detectaron import/variables en el archivo sin usar. \e[m\n"
-#                # Realizar acciones adicionales si es necesario
-#                nombre_archivo=$(basename "$file")
-#                python -m autoflake -cd --remove-unused-variables --remove-unused-variables "$file" > "$APP_PATH/fixed_$nombre_archivo"
-#                let COUNTER_ERROR++,FILE_COUNTER_ERROR++
-#             # else
-#             #    printf "\e[0;31m  - No se detectaron cambios en el archivo. \e[m\n"
-#             fi
+   if [[ $file == analysis* ]];
+   then
+      if [ -z "$python_inst" ]; then
+         if [[ $file == *.py ]]; then
+            cambios=$(python -m autoflake -c --remove-unused-variables --remove-unused-variables "$file")
+            # Verificar si la salida contiene la cadena "Unused imports/variables detected"
+            if [[ "$cambios" == *"Unused imports/variables detected"* ]]; then
+               printf "\e[0;31m  - Se detectaron import/variables en el archivo sin usar. \e[m\n"
+               # Realizar acciones adicionales si es necesario
+               nombre_archivo=$(basename "$file")
+               python -m autoflake -cd --remove-unused-variables --remove-unused-variables "$file" > "$APP_PATH/fixed_$nombre_archivo"
+               let COUNTER_ERROR++,FILE_COUNTER_ERROR++
+            # else
+            #    printf "\e[0;31m  - No se detectaron cambios en el archivo. \e[m\n"
+            fi
       
-#          fi
-#       fi
+         fi
+      fi
 
 
 #       if [[ "$file" =~ ^(notebooks[\/]Users) ]];
@@ -155,7 +155,7 @@ for file in $FILES; do
 #       printf "\e[0;32m  - No se encontraron errores \e[m\n"
 #    fi
 
-# done
+done
 
 # if [ $FILE_COUNTER -gt 20 ]; 
 # then

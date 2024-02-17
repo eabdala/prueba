@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Obtener la lista de archivos modificados
-archivos_modificados=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+# archivos_modificados=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+archivos_modificados=$(ls .)
 
 # Iterar sobre la lista de archivos modificados
 echo "Archivos modificados:"

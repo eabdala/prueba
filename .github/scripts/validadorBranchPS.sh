@@ -147,7 +147,7 @@ fi
 if [ "$COUNTER_ERROR" -ne "0" ]; 
 then
    printf '\n\e[0;31mSe han encontrado %d errores!!!\e[m\n' $COUNTER_ERROR
-   # exit 1
+   exit 1
 else
    printf '\n\e[0;32m%-6s\e[m\n' " Todos los archivos pasaron las validaciones preliminares"
 fi

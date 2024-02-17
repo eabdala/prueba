@@ -36,13 +36,13 @@ jobs:
         env:
             DIFF_PATHS: "*"
             BASE_SHA: ${{ github.event.pull_request.base.sha }}
-  ruff:
+  black:
     needs: execute-script
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v3
-        - uses: actions/setup-python@v4
+        - uses: psf/black@stable
           with:
-            python-version: 3.9
-        - name: Run Ruff
-          uses: chartboost/ruff-action@v1
+            options: "--check --verbose"
+            jupyter: False
+            version: "21.5b1"

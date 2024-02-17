@@ -13,8 +13,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+            fetch-depth: 0 # needed to checkout all branches for this Action to work
       # Check the PR diff using the current branch and the base branch of the PR
-      - uses: GrantBirki/git-diff-action@vX.X.X
+      - uses: GrantBirki/git-diff-action@v2.4.0
         id: git-diff-action
         with:
           json_diff_file_output: diff.json

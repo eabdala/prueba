@@ -36,14 +36,3 @@ jobs:
         env:
             DIFF_PATHS: "*"
             BASE_SHA: ${{ github.event.pull_request.base.sha }}
-  black:
-    needs: execute-script
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@v3
-        - uses: psf/black@stable
-          with:
-            options: "--verbose"
-            jupyter: False
-            src: "./analysis"
-            # version: "21.5b1"

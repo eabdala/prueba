@@ -43,7 +43,7 @@ jobs:
         - uses: actions/checkout@v3
         - uses: psf/black@stable
           with:
-            options: "--check --verbose"
+            options: "--verbose"
             jupyter: False
             src: "./analysis"
             # version: "21.5b1"

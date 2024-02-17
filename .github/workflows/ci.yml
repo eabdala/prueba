@@ -16,8 +16,8 @@ jobs:
         with:
             fetch-depth: 0 # needed to checkout all branches for this Action to work
       # Check the PR diff using the current branch and the base branch of the PR
-    #   - id: changed-files
-    #     uses: ahmadnassri/action-changed-files@v1
+      - id: changed-files
+        uses: ahmadnassri/action-changed-files@v1
 
     #   - run: |
     #       for file in ${{ steps.changed-files.outputs.files }}; do
@@ -29,7 +29,7 @@ jobs:
       - name: Set repository URL as environment variable
         run: echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
       - name: set 
-        run: echo "archivos_modificados=$(git diff master --name-only --diff-filter=d)" >> $GITHUB_ENV
+        run: echo "archivos_modificados=${{ steps.changed-files.outputs.files }}" >> $GITHUB_ENV
 
       - name: Run script
         run: ./.github/scripts/validadorBranchPS.sh $archivos_modificados $BRANCH_NAME $REPO_URL

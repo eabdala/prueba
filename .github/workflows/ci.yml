@@ -1,0 +1,34 @@
+name: Ejecutar Script en PR
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  execute-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set branch name as environment variable
+        run: echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
+
+      - name: Set repository URL as environment variable
+        run: echo "REPO_URL=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
+
+      - name: Run script
+        run: ./.github/scripts/validadorBranchPS.sh $BRANCH_NAME $REPO_URL
+#   ruff:
+#     needs: execute-script
+#     runs-on: ubuntu-latest
+#     steps:
+#         - uses: actions/checkout@v3
+#         - uses: actions/setup-python@v4
+#           with:
+#             python-version: 3.9
+#         - name: Run Ruff
+#           uses: chartboost/ruff-action@v1
